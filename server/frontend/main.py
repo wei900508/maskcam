@@ -58,16 +58,16 @@ def display_sidebar(all_devices, state):
     """
     Display sidebar information.
     """
-    st.sidebar.subheader("Device selection")
+    st.sidebar.subheader("設備選擇")
     state.selected_device = st.sidebar.selectbox(
-        "Selected device",
+        "選擇的設備",
         all_devices,
         index=all_devices.index(state.selected_device if state.selected_device else None),
     )
 
-    st.sidebar.subheader("Filters")
+    st.sidebar.subheader("過濾器")
     state.date_filter = st.sidebar.date_input(
-        "From date - To date",
+        "起始日期 - 結束日期",
         (
             state.date_filter[0]
             if state.date_filter and len(state.date_filter) == 2
@@ -79,19 +79,19 @@ def display_sidebar(all_devices, state):
     )
     first_column, second_column = st.sidebar.beta_columns(2)
     state.from_time = first_column.time_input(
-        "From time", state.from_time if state.from_time else time(0, 0)
+        "起始日期", state.from_time if state.from_time else time(0, 0)
     )
     state.to_time = second_column.time_input(
-        "To time", state.to_time if state.to_time else time(23, 45)
+        "結束日期", state.to_time if state.to_time else time(23, 45)
     )
 
     state.group_data_by = st.sidebar.selectbox(
-        "Group data by",
-        ["Second", "Minute", "Hour", "Day", "Week", "Month"],
+        "分組數據",
+        ["秒", "分鐘", "小時", "天", "周", "月"],
         index=2,
     )
 
-    state.show_only_one_chart = st.sidebar.checkbox("Show only one chart", value=True)
+    state.show_only_one_chart = st.sidebar.checkbox("只顯示一張圖表", value=True)
 
 
 def display_device(state):
@@ -102,7 +102,7 @@ def display_device(state):
     device = get_device(selected_device)
 
     if device is None:
-        st.write("Seems that something went wrong while getting the device information.")
+        st.write("獲取設備訊息時似乎出了點問題。")
     else:
         st.header(f"Device: {device['id']}")
 

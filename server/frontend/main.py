@@ -115,9 +115,9 @@ def display_device(state):
                 )
             device_status = st.beta_container()
             col1, col2 = device_status.beta_columns(2)
-            col1.write("🟢 Device connected " f"*(Last update: {status['time']})*")
+            col1.write("🟢 設備已連接 " f"*(Last update: {status['time']})*")
             if not status["streaming_address"] or status["streaming_address"] == "N/A":
-                col2.write(":red_circle: Streaming is stopped")
+                col2.write(":red_circle: 串流已停止")
             else:
                 if status["device_address"]:
                     col2.write(
@@ -146,25 +146,25 @@ def display_device(state):
         cols = st.beta_columns(6)
         # Buttons from right to left
         with cols.pop():
-            if st.button("Restart Deepstream"):
+            if st.button("重啟 Deepstream"):
                 send_mqtt_command(device["id"], CMD_INFERENCE_RESTART, mqtt_status)
         with cols.pop():
-            if st.button("Restart file server"):
+            if st.button("重啟文件伺服器"):
                 send_mqtt_command(device["id"], CMD_FILESERVER_RESTART, mqtt_status)
         with cols.pop():
-            if st.button("Stop streaming"):
+            if st.button("停止串流"):
                 send_mqtt_command(device["id"], CMD_STREAMING_STOP, mqtt_status)
         with cols.pop():
-            if st.button("Start streaming"):
+            if st.button("開始串流"):
                 send_mqtt_command(device["id"], CMD_STREAMING_START, mqtt_status)
         with cols.pop():
-            if st.button("Save a video"):
+            if st.button("保存影片"):
                 send_mqtt_command(device["id"], CMD_FILE_SAVE, mqtt_status)
         with cols.pop():
-            if st.button("Refresh status"):
+            if st.button("刷新狀態"):
                 send_mqtt_command(device["id"], CMD_REQUEST_STATUS, mqtt_status)
 
-        st.header("Reported statistics")
+        st.header("報告的統計數據")
         device_statistics = None
         date_filter = state.date_filter
 
@@ -174,7 +174,7 @@ def display_device(state):
             device_statistics = get_statistics_from_to(selected_device, datetime_from, datetime_to)
 
         if not device_statistics:
-            st.write("The selected device has no statistics to show for the given filters.")
+            st.write("所選設備沒有可顯示給定過濾器的統計信息。")
         else:
             reports, alerts = format_data(device_statistics, state.group_data_by)
 

@@ -115,7 +115,7 @@ def display_device(state):
                 )
             device_status = st.beta_container()
             col1, col2 = device_status.beta_columns(2)
-            col1.write("🟢 設備已連接 " f"*(Last update: {status['time']})*")
+            col1.write("🟢 裝置已連接 " f"*(最後更新時間: {status['time']})*")
             if not status["streaming_address"] or status["streaming_address"] == "N/A":
                 col2.write(":red_circle: 串流已停止")
             else:
@@ -127,10 +127,10 @@ def display_device(state):
                     )
                 else:
                     col2.write(
-                        "🟢 Streaming enabled (unknown device address)",
+                        "🟢 串流已啟用 (unknown device address)",
                     )
             device_status.write(
-                f"**Save videos: {status['save_current_files']}**"
+                f"**儲存的影片: {status['save_current_files']}**"
                 f" | *Inference runtime: {status['inference_runtime']}*"
                 f" | *Fileserver runtime: {status['fileserver_runtime']}*"
             )
@@ -196,7 +196,7 @@ def display_device(state):
                 else:
                     st.write("The selected device has no alerts to show for the given filters.")
         device_files = get_device_files(device_id=selected_device)
-        st.subheader("Saved video files on device")
+        st.subheader("在設備上保存的影片")
         if not device_files:
             st.write("The selected device has no saved files yet")
         else:

@@ -198,7 +198,7 @@ def display_device(state):
         device_files = get_device_files(device_id=selected_device)
         st.subheader("在設備上保存的影片")
         if not device_files:
-            st.write("The selected device has no saved files yet")
+            st.write("所選設備還沒有保存的文件")
         else:
             server_address = None
             if not state.mqtt_last_status:
@@ -272,7 +272,7 @@ def send_mqtt_message_wait_response(topic, message, mqtt_status):
     try:
         client = get_mqtt_client()
         if not state.mqtt_connected:
-            mqtt_set_status(mqtt_status, "Connecting...")
+            mqtt_set_status(mqtt_status, "正在連接...")
             mqtt_wait_connection(client, 5)
 
         state.mqtt_last_status = None  # Reset status to await updated response
@@ -293,11 +293,11 @@ def send_mqtt_message_wait_response(topic, message, mqtt_status):
                 timeout -= 1
 
             if msg_info.is_published():
-                mqtt_set_status(mqtt_status, ":clock3: Waiting device response...")
+                mqtt_set_status(mqtt_status, ":clock3: 等待設備響應...")
                 retry_publish = 0  # Success: exit retry loop
             elif msg_info.rc:
                 state.mqtt_connected = False
-                mqtt_set_status(mqtt_status, ":clock3: Reconnecting...")
+                mqtt_set_status(mqtt_status, ":clock3: 正在重新連接...")
                 client.reconnect()
                 mqtt_wait_connection(client, 5)
 
@@ -307,10 +307,10 @@ def send_mqtt_message_wait_response(topic, message, mqtt_status):
 
         mqtt_wait_response(client, 5)
         if not state.mqtt_last_status:
-            mqtt_set_status(mqtt_status, ":red_circle: Device not responding")
+            mqtt_set_status(mqtt_status, ":red_circle: 設備無響應")
 
     except Exception as e:
-        mqtt_set_status(mqtt_status, f":red_circle: Could not connect to MQTT broker: {e}")
+        mqtt_set_status(mqtt_status, f":red_circle: 無法連接到 MQTT 代理: {e}")
 
 
 def send_mqtt_command(device_id, command, mqtt_status):

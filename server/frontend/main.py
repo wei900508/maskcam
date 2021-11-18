@@ -322,7 +322,7 @@ def send_mqtt_command(device_id, command, mqtt_status):
 def main():
     st.set_page_config(page_title="Maskcam")
 
-    st.title("MaskCam dashboard")
+    st.title("口罩辨識儀表板")
     all_devices = get_devices()
     display_sidebar(all_devices, state)
 
